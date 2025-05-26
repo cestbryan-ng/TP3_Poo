@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.tp3_poo.Page1Controller">
+   <children>
+      <HBox fx:id="hbox1" alignment="CENTER" prefHeight="71.0" prefWidth="950.0">
+         <children>
+            <Label fx:id="nom_orga" text="Nom organisateur : " />
+         </children>
+      </HBox>
+      <HBox fx:id="hbox2" alignment="CENTER" prefHeight="73.0" prefWidth="950.0">
+         <children>
+            <Label fx:id="texte" text="La liste de vos événements : " />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="458.0" prefWidth="950.0">
+         <children>
+            <VBox fx:id="vbox1" alignment="TOP_CENTER" prefHeight="458.0" prefWidth="149.0">
+               <children>
+                  <Label text="Filtrer">
+                     <VBox.margin>
+                        <Insets top="90.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding></Label>
+                  <TextField fx:id="recherche" disable="true" maxWidth="-Infinity" prefHeight="27.0" prefWidth="100.0" promptText="Rechercher..." />
+                  <Button fx:id="rechercher" mnemonicParsing="false" onAction="#rechercher" text="Rechercher">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="button" mnemonicParsing="false" onAction="#ajouter_confer" text="Ajouter confèrence">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="button" mnemonicParsing="false" onAction="#ajouter_concert" text="Ajouter concert">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <ScrollPane prefHeight="458.0" prefWidth="800.0">
+               <content>
+                  <VBox fx:id="vbox" prefHeight="463.0" prefWidth="783.0">
+                     <children>
+                        <Button fx:id="event" mnemonicParsing="false" prefHeight="84.0" prefWidth="810.0" text="button">
+                           <graphic>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="775.0">
+                                 <children>
+                                    <ImageView fitHeight="54.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/conference.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets left="50.0" right="50.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin></Label>
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets right="50.0" />
+                                       </padding></Label>
+                                    <Label text="Label">
+                                       <padding>
+                                          <Insets right="50.0" />
+                                       </padding></Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding></HBox>
+                           </graphic>
+                        </Button>
+                     </children></VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

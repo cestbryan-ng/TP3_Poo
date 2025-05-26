@@ -1,0 +1,98 @@
+.root {
+    -fx-background-color : #141725;
+}
+
+#hbox1, #hbox2 {
+    -fx-border-color : "white";
+    -fx-border-width : 0 0 0.5 0;
+}
+
+#vbox1 {
+    -fx-border-color : "white";
+    -fx-border-width : 0 0.5 0 0;
+}
+
+#vbox {
+    -fx-background-color : #141725;
+}
+
+#nom_orga {
+    -fx-font-size : 25;
+    -fx-text-fill : "white";
+    -fx-font-family : "cambria";
+}
+
+#texte {
+    -fx-font-size : 20;
+    -fx-text-fill : "white";
+    -fx-font-family : "cambria";
+}
+
+.label {
+    -fx-font-size : 15;
+    -fx-text-fill : "white";
+    -fx-font-family : "cambria";
+}
+
+#recherche {
+    -fx-background-color : #3d3c3c;
+    -fx-text-fill : white;
+    -fx-font-weight : bold;
+    -fx-font-size : 13;
+    -fx-background-radius : 10;
+}
+
+#rechercher {
+    -fx-cursor : hand;
+    -fx-background-color : "black";
+    -fx-border-width : 0 0 1 0;
+    -fx-border-color : "white";
+    -fx-text-fill : white;
+}
+
+#button {
+    -fx-cursor : hand;
+    -fx-background-color : "green";
+    -fx-border-width : 0 0 1 0;
+    -fx-border-color : "white";
+    -fx-text-fill : white;
+}
+
+#event {
+    -fx-background-color : #fafbfa;
+    -fx-cursor : hand;
+    -fx-text-fill : white;
+    -fx-border-color : gray;
+    -fx-border-width : 0 0 1 0;
+}
+
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color : gray;
+    -fx-border-width : 0 0 1 0;
+}
+
+.button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+    -fx-border-color : gray;
+    -fx-border-width : 0 0 1 0;
+}
+
+.scroll-pane {
+    -fx-background-color : transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color : transparent;
+    -fx-border-color : transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color : #3d3c3c;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+}

@@ -1,0 +1,82 @@
+package classes;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Conference extends Evenement {
+    private String theme;
+    private List<Participant> intervenants;
+
+    public Conference() {
+    }
+
+    public Conference(String id, String nom, LocalDateTime date, String lieu, Integer capaciteMax, String theme, List<Participant> intervenants) {
+        super(id, nom, date, lieu, capaciteMax);
+        this.theme = theme;
+        this.intervenants = intervenants;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public List<Participant> getIntervenants() {
+        return intervenants;
+    }
+
+    public void setIntervenants(List<Participant> intervenants) {
+        this.intervenants = intervenants;
+    }
+
+
+    public List<Object> ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant) {
+        List<Object> list =  (List) liste.get(indice).get(3);
+        if (list.size() >= this.getCapaciteMax()) {
+            throw new CapaciteMaxAtteinteException("Capacité maximale dépassée");
+        } else {
+            list.add(participant);
+        }
+
+        return list;
+    }
+
+    public List<Object>  annuler(List<List<Object>> liste, Integer indice, Participant participant) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        List<Object> list =  (List) liste.get(indice).get(3);
+        int i = 0;
+        for (Object elt : list) {
+            Participant participant1 = mapper.convertValue(elt, Participant.class);
+            if (participant1.getEmail().equals(participant.getEmail())) {
+                list.remove(i);
+                return list;
+            }
+            i++;
+        }
+        throw new RuntimeException();
+    }
+
+    public List<String> afficherDetails() {
+        List<String> liste = new ArrayList<>();
+
+        liste.add(this.getNom());
+        liste.add(this.getTheme());
+        liste.add(this.getId());
+        liste.add(this.getLieu());
+        liste.add(this.getCapaciteMax().toString());
+        liste.add(this.getDate().toString());
+        List<String> intervenants = this.getIntervenants().stream().map(e -> e.getNom()).toList();
+        liste.add(intervenants.toString());
+
+        return liste;
+    }
+}

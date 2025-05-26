@@ -1,0 +1,63 @@
+.root {
+    -fx-background-color : #141725;
+}
+
+#button {
+    -fx-cursor : hand;
+    -fx-background-color : "black";
+    -fx-border-width : 0 0 1 0;
+    -fx-border-color : "white";
+    -fx-text-fill : white;
+}
+
+#button1 {
+   -fx-cursor : hand;
+   -fx-background-color : "green";
+   -fx-border-width : 0 0 1 0;
+   -fx-border-color : "white";
+   -fx-text-fill : white;
+}
+
+#button2 {
+    -fx-cursor : hand;
+    -fx-background-color : "red";
+    -fx-border-width : 0 0 1 0;
+    -fx-border-color : "white";
+    -fx-text-fill : white;
+}
+
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color : "lightblue";
+    -fx-border-width : 1 0 1 0;
+}
+
+.button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+    -fx-border-color : "lightblue";
+    -fx-border-width : 1;
+}
+
+#participant, #nom {
+    -fx-background-color : #3d3c3c;
+    -fx-text-fill : white;
+    -fx-font-weight : bold;
+    -fx-font-size : 13;
+    -fx-background-radius : 10;
+}
+
+.label {
+    -fx-font-size : 15;
+    -fx-text-fill : "white";
+    -fx-font-family : "cambria";
+}
+
+.text-input {
+    -fx-background-color : #3d3c3c;
+    -fx-text-fill : white;
+    -fx-font-weight : bold;
+    -fx-font-size : 13;
+    -fx-background-radius : 10;
+}
