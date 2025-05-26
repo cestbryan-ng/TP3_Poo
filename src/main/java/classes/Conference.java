@@ -1,8 +1,13 @@
 package classes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.scene.control.Alert;
+import ui.tp3_poo.Page1Controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +42,29 @@ public class Conference extends Evenement {
     }
 
 
-    public List<Object> ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant) {
+    public boolean ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant, String nom_fichier) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
         List<Object> list =  (List) liste.get(indice).get(3);
+
         if (list.size() >= this.getCapaciteMax()) {
             throw new CapaciteMaxAtteinteException("Capacité maximale dépassée");
         } else {
             list.add(participant);
-        }
+            liste.get(indice).set(3, list);
 
-        return list;
+            try {
+                mapper.writeValue(new File(nom_fichier + ".json"), liste);
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
     }
 
-    public List<Object>  annuler(List<List<Object>> liste, Integer indice, Participant participant) {
+    public boolean annuler(List<List<Object>> liste, Integer indice, Participant participant, String nom_fichier) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
@@ -58,7 +74,14 @@ public class Conference extends Evenement {
             Participant participant1 = mapper.convertValue(elt, Participant.class);
             if (participant1.getEmail().equals(participant.getEmail())) {
                 list.remove(i);
-                return list;
+                liste.get(indice).set(3, list);
+                try {
+                    mapper.writeValue(new File(nom_fichier + ".json"), liste);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
             }
             i++;
         }

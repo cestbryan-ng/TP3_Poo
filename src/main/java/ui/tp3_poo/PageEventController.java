@@ -76,13 +76,13 @@ public class PageEventController {
             return;
         }
 
+        boolean resultat = false;
         Participant participant1 = new Participant(nom.getText(), participant.getText());
-        List<Object> liste = new ArrayList<>();
 
         if (Page1Controller.liste.get(indice).get(0).equals("concert")) {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             try {
-                liste = concert.annuler(Page1Controller.liste, indice, participant1);
+                resultat = concert.annuler(Page1Controller.liste, indice, participant1, "liste_event");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Not Found Participant");
@@ -90,23 +90,24 @@ public class PageEventController {
                 alert.show();
                 return;
             }
-            Page1Controller.liste.get(indice).set(3, liste);
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            if (resultat) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setHeaderText("Rétiré avec succès");
+                alert.setHeaderText("Retiré avec succès");
                 alert.setContentText("Participant " + nom.getText() + " d'email " + participant.getText() + " retiré.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Error");
+                alert.setContentText("Nous n'avons pas pu rétirer");
+                alert.show();
             }
 
 
         } else {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             try {
-                liste = conference.annuler(Page1Controller.liste, indice, participant1);
+                resultat = conference.annuler(Page1Controller.liste, indice, participant1, "liste_event");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Not Found Participant");
@@ -114,16 +115,17 @@ public class PageEventController {
                 alert.show();
                 return;
             }
-            Page1Controller.liste.get(indice).set(3, liste);
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            if (resultat) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Retiré avec succès");
                 alert.setContentText("Participant " + nom.getText() + " d'email " + participant.getText() + " retiré.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Error");
+                alert.setContentText("Nous n'avons pas pu rétirer");
+                alert.show();
             }
         }
 
@@ -144,12 +146,13 @@ public class PageEventController {
             return;
         }
 
+        boolean resultat = false;
         Participant participant1 = new Participant(nom.getText(), participant.getText());
-        List<Object> liste = new ArrayList<>();
+
         if (Page1Controller.liste.get(indice).get(0).equals("concert")) {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             try {
-                liste = concert.ajouterParticipant(Page1Controller.liste, indice, participant1);
+                resultat = concert.ajouterParticipant(Page1Controller.liste, indice, participant1, "liste_event");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Evenement plein");
@@ -157,23 +160,24 @@ public class PageEventController {
                 alert.show();
                 return;
             }
-            Page1Controller.liste.get(indice).set(3, liste);
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            if (resultat) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Ajouté avec succès");
                 alert.setContentText("Participant " + nom.getText() + " ajouté.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Erreur");
+                alert.setContentText("Nous n'avons pas pu ajouter");
+                alert.show();
             }
 
 
         } else {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             try {
-                liste = conference.ajouterParticipant(Page1Controller.liste, indice, participant1);
+                resultat = conference.ajouterParticipant(Page1Controller.liste, indice, participant1, "liste_event");
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Evenement plein");
@@ -181,19 +185,18 @@ public class PageEventController {
                 alert.show();
                 return;
             }
-            Page1Controller.liste.get(indice).set(3, liste);
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            if (resultat) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Ajouté avec succès");
                 alert.setContentText("Participant " + nom.getText() + " ajouté.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Erreur");
+                alert.setContentText("Nous n'avons pas pu ajouter");
+                alert.show();
             }
-
-
         }
     }
 
@@ -205,34 +208,41 @@ public class PageEventController {
         if (Page1Controller.liste.get(indice).get(0).equals("conference")) {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             GestionEvenements gestionEvenements = GestionEvenements.getInstance();
-            Integer indic = gestionEvenements.supprimerEvenement(Page1Controller.liste, conference);
 
-            Page1Controller.liste.remove(indice);
+            boolean result = false;
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            result = gestionEvenements.supprimerEvenement(Page1Controller.liste, conference, "liste_event");
+
+            if (result) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Retiré avec succès");
                 alert.setContentText("L'event a été retiré.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Erreur");
+                alert.setContentText("L'event n'a pas pu être retiré.");
+                alert.show();
             }
+
         } else {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             GestionEvenements gestionEvenements = GestionEvenements.getInstance();
-            Integer indic = gestionEvenements.supprimerEvenement(Page1Controller.liste, concert);
 
-            Page1Controller.liste.remove(indice);
+            boolean result = false;
 
-            try {
-                mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+            result = gestionEvenements.supprimerEvenement(Page1Controller.liste, concert, "liste_event");
+
+            if (result) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Retiré avec succès");
                 alert.setContentText("L'event a été retiré.");
                 alert.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Erreur");
+                alert.setContentText("L'event n'a pas pu être retiré.");
+                alert.show();
             }
         }
     }

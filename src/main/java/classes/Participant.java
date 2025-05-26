@@ -3,6 +3,7 @@ package classes;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class Participant {
     private String id;
@@ -64,5 +65,12 @@ public class Participant {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object a) {
+        if (this == a) return  true;
+
+        return Objects.equals(id, ((Participant) a).getId()) && Objects.equals(nom, ((Participant) a).getNom()) && Objects.equals(email, ((Participant) a).getEmail());
     }
 }

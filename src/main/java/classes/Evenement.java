@@ -61,9 +61,9 @@ public abstract class Evenement {
         this.capaciteMax = capaciteMax;
     }
 
-    abstract public List<Object> ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant);
+    abstract public boolean ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant, String nom_fichier);
 
-    abstract public List<Object> annuler(List<List<Object>> liste, Integer indice, Participant participant);
+    abstract public boolean annuler(List<List<Object>> liste, Integer indice, Participant participant, String nom_fichier);
 
     abstract public List<String> afficherDetails();
 }

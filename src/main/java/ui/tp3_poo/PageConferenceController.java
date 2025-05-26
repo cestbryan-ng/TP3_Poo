@@ -38,10 +38,6 @@ public class PageConferenceController {
 
     @FXML
     void ajouter() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
         if (intervenant.getText().equals("") || capacite.getText().equals("") || date.getText().equals("") || theme.getText().equals("") || lieu.getText().equals("") || nom.getText().equals(""))  {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Remplissez tous les champs");
@@ -75,9 +71,10 @@ public class PageConferenceController {
             return;
         }
 
-        List<Object> liste = new ArrayList<>();
+        boolean resultat = false;
+
         try {
-            liste = gestionEvenements.ajouterEvenement(conference, MainPageController.nomutilisateur, Page1Controller.liste);
+            resultat = gestionEvenements.ajouterEvenement(conference, MainPageController.nomutilisateur, Page1Controller.liste, "liste_event");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Echec");
@@ -85,16 +82,17 @@ public class PageConferenceController {
             alert.show();
             return;
         }
-        Page1Controller.liste.add(liste);
 
-        try {
-            mapper.writeValue(new File("liste_event.json"), Page1Controller.liste);
+        if (resultat) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Ajouté avec succès");
             alert.setContentText("Fermer l'interface pour accéder à la nouvelle modification");
             alert.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Echec");
+            alert.setContentText("Nous n'avons pas pu créer.");
+            alert.show();
         }
     }
 }
