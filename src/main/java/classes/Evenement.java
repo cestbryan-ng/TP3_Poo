@@ -10,6 +10,7 @@ public abstract class Evenement {
     private String lieu;
     private Integer capaciteMax;
 
+    // Constructeurs
     public Evenement() {
     }
 
@@ -21,6 +22,7 @@ public abstract class Evenement {
         this.capaciteMax = capaciteMax;
     }
 
+    // Getters & setters
     public String getNom() {
         return nom;
     }
@@ -60,6 +62,8 @@ public abstract class Evenement {
     public void setCapaciteMax(Integer capaciteMax) {
         this.capaciteMax = capaciteMax;
     }
+
+    //  Les methodes sont détaillées dans les differentes classes filles
 
     abstract public boolean ajouterParticipant(List<List<Object>> liste, Integer indice, Participant participant, String nom_fichier);
 

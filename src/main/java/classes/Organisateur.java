@@ -5,6 +5,7 @@ import java.util.Map;
 public class Organisateur extends Participant{
     private Map<String, Evenement> evenementsOrganises;
 
+    //  Constructeurs
     public Organisateur() {
     }
 
@@ -12,6 +13,7 @@ public class Organisateur extends Participant{
         super(id, nom, email);
     }
 
+    // Getters & Setters
     public Map<String, Evenement> getEvenements() {
         return evenementsOrganises;
     }

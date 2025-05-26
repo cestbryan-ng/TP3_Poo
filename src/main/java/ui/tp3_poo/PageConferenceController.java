@@ -36,6 +36,7 @@ public class PageConferenceController {
     @FXML
     private TextField theme;
 
+    //  Methode pour ajouter une conference dans le json (sérialisation)
     @FXML
     void ajouter() {
         if (intervenant.getText().equals("") || capacite.getText().equals("") || date.getText().equals("") || theme.getText().equals("") || lieu.getText().equals("") || nom.getText().equals(""))  {
@@ -46,6 +47,7 @@ public class PageConferenceController {
             return;
         }
 
+        // Création d'un singleton pour gérer le conférence et du conference en question
         GestionEvenements gestionEvenements = GestionEvenements.getInstance();
         Conference conference = new Conference();
 
@@ -71,6 +73,7 @@ public class PageConferenceController {
             return;
         }
 
+        //  Utilisation d'un predicat qui confirme l'ajout de la conference (sérialisation)
         boolean resultat = false;
 
         try {

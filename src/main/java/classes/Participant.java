@@ -10,6 +10,7 @@ public class Participant {
     private String nom;
     private String email;
 
+    //  Constructeurs
     public Participant() {
     }
 
@@ -24,6 +25,7 @@ public class Participant {
         this.email = email;
     }
 
+    // Getters & Setters
     public String getId() {
         return id;
     }
@@ -48,25 +50,7 @@ public class Participant {
         this.email = email;
     }
 
-    public boolean inscrire(Connection connection, String mot_de_passe) {
-        try(Statement statement = connection.createStatement()) {
-            statement.executeUpdate("insert into user(nom, mot_de_passe, email)\n" +
-                    "values (\""+ this.nom +"\", \""+ mot_de_passe +"\", \""+ this.email +"\"); ");
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
-    public boolean desinscrire(Connection connection) {
-        try(Statement statement = connection.createStatement()) {
-            int resultat = statement.executeUpdate("delete from user where email = \""+ email +"\";");
-            return resultat > 0;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
-
+    //  Redefinition de la méthode equals de sorte que mtn deux participants ayant les meme attributs sont egaux
     @Override
     public boolean equals(Object a) {
         if (this == a) return  true;

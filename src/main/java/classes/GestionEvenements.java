@@ -2,13 +2,9 @@ package classes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import javafx.scene.control.Alert;
-import ui.tp3_poo.Page1Controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +12,7 @@ public class GestionEvenements {
     private static GestionEvenements instance;
     private  Map<String, Evenement> evenementsOrganises;
 
+    // Constructeurs
     private GestionEvenements() {}
 
     public static GestionEvenements getInstance() {
@@ -25,10 +22,13 @@ public class GestionEvenements {
         return instance;
     }
 
+    //  Methode pour supprimer un event, on va supprimer l'objet Evenement dans le fichier json qui sert de stockage
     public boolean supprimerEvenement(List<List<Object>> liste ,Evenement evenement, String nom_fichier) {
+        //  Création du ObjectMapper pour la sérialisation
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        //  On fait une recherche séquentielle, si l'event est dans la liste on le retire
         for (int i = 0; i < liste.size(); i++) {
             if (liste.get(i).get(0).equals("conference")) {
                 Conference conference1 = mapper.convertValue(liste.get(i).get(2), Conference.class);
@@ -36,7 +36,8 @@ public class GestionEvenements {
                 else {
                     Conference conference = (Conference) evenement;
                     if (conference.getNom().equals(conference1.getNom()) && conference.getDate().equals(conference1.getDate()) && conference.getLieu().equals(conference1.getLieu()) && conference.getIntervenants().equals(conference1.getIntervenants()) && conference.getTheme().equals(conference1.getTheme()) && conference.getId().equals(conference1.getId())) {
-                        liste.remove(i);
+                        liste.remove(i);        //  On retire l'event de la liste des events
+                        //  Puis on sérialise,  on retourne un booleen qu'on utilisera pour l'affichage dans l'interface
                         try {
                             mapper.writeValue(new File(nom_fichier + ".json"), liste);
                             return true;
@@ -52,7 +53,8 @@ public class GestionEvenements {
                 else {
                     Concert concert = (Concert) evenement;
                     if (concert.getNom().equals(concert1.getNom()) && concert.getDate().equals(concert1.getDate()) && concert.getLieu().equals(concert1.getLieu()) && concert.getArtiste().equals(concert1.getArtiste())  && concert.getGenreMusical().equals(concert1.getGenreMusical()) && concert.getId().equals(concert1.getId())) {
-                        liste.remove(i);
+                        liste.remove(i);        //  On retire l'event de la liste des events
+                        //  Puis on sérialise,  on retourne un booleen qu'on utilisera pour l'affichage dans l'interface
                         try {
                             mapper.writeValue(new File(nom_fichier + ".json"), liste);
                             return true;
@@ -67,11 +69,14 @@ public class GestionEvenements {
         return false;
     }
 
+    //  Methode pour ajouter un event, on va ajouter l'objet Evenement dans le fichier json qui sert de stockage
     public boolean ajouterEvenement(Evenement evenement, String owner, List<List<Object>> liste, String nom_fichier) {
+        //  Création du ObjectMapper pour la sérialisation
         List<Object> list = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        //  On fait une recherche séquentielle, si l'event est dans la liste d'event on va lever notre excpetion personnalisée EventDejaExistantException
         for (int i = 0; i < liste.size(); i++) {
             if (liste.get(i).get(0).equals("conference")) {
                 Conference conference1 = mapper.convertValue(liste.get(i).get(2), Conference.class);
@@ -90,6 +95,7 @@ public class GestionEvenements {
             }
         }
 
+        //  On ajoute l'event dans la liste d'event
         if (evenement instanceof Concert) {
             Concert concert = (Concert) evenement;
             list.add("concert");
@@ -105,6 +111,7 @@ public class GestionEvenements {
         }
         liste.add(list);
 
+        //  Puis on sérialise,  on retourne un booleen qu'on utilisera pour l'affichage dans l'interface
         try {
             mapper.writeValue(new File(nom_fichier + ".json"), liste);
             return true;
@@ -113,6 +120,7 @@ public class GestionEvenements {
         }
     }
 
+    // Getters & Setters
     public Map<String, Evenement> getEvenementsOrganises() {
         return evenementsOrganises;
     }

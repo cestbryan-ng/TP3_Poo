@@ -11,10 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PageEventController {
@@ -26,11 +22,14 @@ public class PageEventController {
     @FXML
     private TextField participant;
 
+    //  Methodes pour afficher les détails de l'event
     @FXML
     void details(ActionEvent event) {
+        //  Création d'un ObjectMapper pour la conversion de type
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        // S'il s'agit d'une conférence on affiche ses infos dans une boite de dialogue
         if (Page1Controller.liste.get(indice).get(0).equals("conference")) {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             List<String> liste = conference.afficherDetails();
@@ -45,6 +44,8 @@ public class PageEventController {
                     "Les intervenants : " + liste.get(6) + "\n"
             );
             alert.show();
+
+        //  Sinon, s'il s'agit d'un concert
         } else {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             List<String> liste = concert.afficherDetails();
@@ -62,12 +63,14 @@ public class PageEventController {
         }
     }
 
+    //  Methode pour désinscrire un participant
     @FXML
     void annuler() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
+        //  Si le champ d'email est vide on ne fait rien
         if (participant.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Erreur");
@@ -76,9 +79,11 @@ public class PageEventController {
             return;
         }
 
+        //  Utilisation d'un predicat pour gérer l'affichage en cas d'échec ou de réussite
         boolean resultat = false;
         Participant participant1 = new Participant(nom.getText(), participant.getText());
 
+        //  S'il s'agit d'un concert
         if (Page1Controller.liste.get(indice).get(0).equals("concert")) {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             try {
@@ -103,7 +108,7 @@ public class PageEventController {
                 alert.show();
             }
 
-
+        //  S'il s'agit d'une conférence
         } else {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             try {
@@ -132,8 +137,10 @@ public class PageEventController {
 
     }
 
+    //  Methode pour ajouter un participant
     @FXML
     void ajouter() {
+        //  Création d'un ObjectMAapper pour la conversion de type après une déserialisation
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -146,9 +153,11 @@ public class PageEventController {
             return;
         }
 
+        //  Utilisation d'un predicat pour gérer l'affichage en cas d'échec ou de réussite
         boolean resultat = false;
         Participant participant1 = new Participant(nom.getText(), participant.getText());
 
+        //  S'il s'agit d'un concert
         if (Page1Controller.liste.get(indice).get(0).equals("concert")) {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             try {
@@ -173,7 +182,7 @@ public class PageEventController {
                 alert.show();
             }
 
-
+        //  Sinon une conférence
         } else {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             try {
@@ -200,15 +209,19 @@ public class PageEventController {
         }
     }
 
+    //  Methode pour supprimer un event
     @FXML
     void supprimer() {
+        //  Création d'un PbjectMapper pour la conversion de type après une déserialisation
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        //  S'il s'agit une conférence
         if (Page1Controller.liste.get(indice).get(0).equals("conference")) {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             GestionEvenements gestionEvenements = GestionEvenements.getInstance();
 
+            //  Utilisation d'un prédicat pour gérer l'affichage en cas d'échec ou de réussite
             boolean result = false;
 
             result = gestionEvenements.supprimerEvenement(Page1Controller.liste, conference, "liste_event");
@@ -225,10 +238,12 @@ public class PageEventController {
                 alert.show();
             }
 
+        //  Concert
         } else {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             GestionEvenements gestionEvenements = GestionEvenements.getInstance();
 
+            //  Utilisation d'un prédicat pour gérer l'affichage en cas d'échec ou de réussite
             boolean result = false;
 
             result = gestionEvenements.supprimerEvenement(Page1Controller.liste, concert, "liste_event");

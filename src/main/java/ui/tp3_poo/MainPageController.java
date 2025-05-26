@@ -31,25 +31,28 @@ public class MainPageController {
     @FXML
     private Label message_erreur;
 
-
+    //  Connexion de l'organisateur en passant par une table dans une bd
     @FXML
     void connexion() {
         nomutilisateur = nom_utilisateur.getText();
         String motdepasse = mot_de_passe_utilisateur.getText();
         message_erreur.setStyle("-fx-text-fill : red");
 
+        //  On ne fait rien  si les champs sont vides
         if ((nomutilisateur.isEmpty()) || (motdepasse.isEmpty())) {
             message_erreur.setText("Entrer votre nom ou/et votre mot de passe");
             return;
         }
 
+        //  Connexion à la bd, et vérification si l'utilisateur existe
         try(Connection connection = PoolConnexion.seConnecter();
             Statement stm = connection.createStatement()) {
             ResultSet resultSet = stm.executeQuery("SELECT nom, mot_de_passe FROM organisateur;");
             while (resultSet.next()) {
                 if ((nomutilisateur.equals(resultSet.getString(1))) && (motdepasse.equals(resultSet.getString(2)))) {
                     resultSet.close();
-                    // Lancement de la nouvelle fenetre
+
+                    //  Lancement de la nouvelle fenetre
                     FXMLLoader fxmlLoader = new FXMLLoader(MainPage.class.getResource("page1.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 950, 600);
                     scene.getStylesheets().add(getClass().getResource("page1.css").toExternalForm());
@@ -63,6 +66,7 @@ public class MainPageController {
                 }
             }
 
+            //  Si on a pas trouvé, on ne se connecte pas
             message_erreur.setText("Utilisateur ou Mot de passe incorrect");
 
         } catch (SQLException | IOException e) {

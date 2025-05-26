@@ -37,18 +37,23 @@ public class Page1Controller implements Initializable {
     @FXML
     private VBox vbox;
 
+    // Point d'entrée, cette méthode s'éxecute avant le chargement de l'interface pour effectuer des changements dynamiques
     public void initialize(URL location, ResourceBundle resources) {
         vbox.getChildren().clear();
         nom_orga.setText("Nom organisateur : " + MainPageController.nomutilisateur);
+
+        //  Création d'un ObjectMapper pour la désérialisation
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        //  Charge le contenu binaire du json dans une liste
         try {
             liste = mapper.readValue(
                 new File("liste_event.json"),
                 new TypeReference<List<List<Object>>>() {}
             );
 
+            //  Affichage des évents de l'organisateur sur l'interface
             Integer n = 0;
             for (List<Object> i : liste) {
                 if (i.get(1).equals(MainPageController.nomutilisateur)) {
@@ -129,19 +134,19 @@ public class Page1Controller implements Initializable {
         }
     }
 
-    @FXML
-    void rechercher() {
 
-    }
-
+    //  Methode pour ajouter une conference
     @FXML
     void ajouter_confer() throws IOException {
+        //  On charge une nouvelle interface pour cela
         FXMLLoader fxmlLoader = new FXMLLoader(MainPage.class.getResource("pageconference.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 451, 271);
         scene.getStylesheets().add(getClass().getResource("pageevent.css").toExternalForm());
         Stage stage = new Stage();
         stage.setTitle("MonApp");
         stage.setScene(scene);
+
+        //  Utilisation d'une lambda pour definir pour un point de retour à l'ancienne interface
         stage.setOnCloseRequest(e -> {
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader(MainPage.class.getResource("page1.fxml"));
@@ -153,19 +158,25 @@ public class Page1Controller implements Initializable {
                 stage2.show();
             } catch (IOException err) {}
         });
+
+        //  Fermeture de l'interface courante
         stage.show();
         Stage stage1 = (Stage) vbox.getScene().getWindow();
         stage1.close();
     }
 
+    //  Methode pour ajouter un concert
     @FXML
     void ajouter_concert() throws IOException {
+        //  On charge une nouvelle interface pour cela
         FXMLLoader fxmlLoader = new FXMLLoader(MainPage.class.getResource("pageconcert.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 451, 271);
         scene.getStylesheets().add(getClass().getResource("pageevent.css").toExternalForm());
         Stage stage = new Stage();
         stage.setTitle("MonApp");
         stage.setScene(scene);
+
+        //  Utilisation d'une lambda pour definir pour un point de retour à l'ancienne interface
         stage.setOnCloseRequest(e -> {
             try {
                 FXMLLoader fxmlLoader2 = new FXMLLoader(MainPage.class.getResource("page1.fxml"));
@@ -177,13 +188,17 @@ public class Page1Controller implements Initializable {
                 stage2.show();
             } catch (IOException err) {}
         });
+
+        //  Fermeture de l'interface courante
         stage.show();
         Stage stage1 = (Stage) vbox.getScene().getWindow();
         stage1.close();
     }
 
+    //  Methode pour configurer un event
     @FXML
     void evenement(ActionEvent event)  {
+        // On charge une nouvelle interface pour cela
         Button button = (Button) event.getSource();
         PageEventController.indice = Integer.parseInt(button.getText());
 
@@ -194,6 +209,8 @@ public class Page1Controller implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("MonApp");
             stage.setScene(scene);
+
+            //  Utilisation d'une lambda pour definir pour un point de retour à l'ancienne interface
             stage.setOnCloseRequest(e -> {
                 try {
                     FXMLLoader fxmlLoader2 = new FXMLLoader(MainPage.class.getResource("page1.fxml"));
@@ -205,11 +222,18 @@ public class Page1Controller implements Initializable {
                     stage2.show();
                 } catch (IOException err) {}
             });
+
             stage.show();
             Stage stage1 = (Stage) vbox.getScene().getWindow();
             stage1.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //  Methode pour filtrer les events
+    @FXML
+    void rechercher() {
+
     }
 }
