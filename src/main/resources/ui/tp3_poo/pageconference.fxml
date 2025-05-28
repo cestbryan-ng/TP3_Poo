@@ -14,14 +14,14 @@
                 <Image url="@images/conference.png" />
             </image>
         </ImageView>
-        <TextField fx:id="nom" layoutX="263.0" layoutY="13.0" prefHeight="27.0" prefWidth="157.0" />
+        <TextField fx:id="nom" layoutX="263.0" layoutY="13.0" prefHeight="27.0" prefWidth="157.0" promptText="Entrer le nom..." />
         <Label layoutX="208.0" layoutY="17.0" text="nom" />
         <Label layoutX="208.0" layoutY="58.0" text="thème" />
-        <TextField fx:id="theme" layoutX="263.0" layoutY="54.0" prefHeight="27.0" prefWidth="157.0" />
-        <TextField fx:id="date" layoutX="263.0" layoutY="218.0" prefHeight="27.0" prefWidth="157.0" />
-        <TextField fx:id="intervenant" layoutX="299.0" layoutY="136.0" prefHeight="27.0" prefWidth="121.0" />
-        <TextField fx:id="lieu" layoutX="263.0" layoutY="95.0" prefHeight="27.0" prefWidth="157.0" />
-        <TextField fx:id="capacite" layoutX="299.0" layoutY="177.0" prefHeight="27.0" prefWidth="121.0" />
+        <TextField fx:id="theme" layoutX="263.0" layoutY="54.0" prefHeight="27.0" prefWidth="157.0" promptText="Entrer le thème..." />
+        <TextField fx:id="date" layoutX="242.0" layoutY="218.0" prefHeight="27.0" prefWidth="178.0" promptText="AAAA-MM-JJTHH:MM;SS" />
+        <TextField fx:id="intervenant" layoutX="299.0" layoutY="136.0" prefHeight="27.0" prefWidth="121.0" promptText="nom1,nom2,..." />
+        <TextField fx:id="lieu" layoutX="252.0" layoutY="95.0" prefHeight="27.0" prefWidth="168.0" promptText="Entrer le lieu..." />
+        <TextField fx:id="capacite" layoutX="299.0" layoutY="177.0" prefHeight="27.0" prefWidth="121.0" promptText="Capacité..." />
         <Label layoutX="208.0" layoutY="99.0" text="lieu" />
         <Label layoutX="208.0" layoutY="140.0" text="Intervenants" />
         <Label layoutX="208.0" layoutY="181.0" text="capacité max" />

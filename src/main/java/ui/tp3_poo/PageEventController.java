@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PageEventController {
@@ -33,6 +35,11 @@ public class PageEventController {
         if (Page1Controller.liste.get(indice).get(0).equals("conference")) {
             Conference conference = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Conference.class);
             List<String> liste = conference.afficherDetails();
+            List liste_parti = mapper.convertValue(Page1Controller.liste.get(indice).get(3), List.class);
+            List<Participant> liste_participant = new ArrayList<>();
+            for (int i = 0; i < liste_parti.size(); i++) {
+                liste_participant.add(mapper.convertValue(liste_parti.get(i), Participant.class));
+            }
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Information de la conférence");
             alert.setContentText("Nom conference : " + liste.get(0) + "\n" +
@@ -41,7 +48,8 @@ public class PageEventController {
                     "Lieu conference : " + liste.get(3)+ "\n" +
                     "Capacité max : " + liste.get(4) + "\n" +
                     "Date de debut conference : " + liste.get(5) + "\n" +
-                    "Les intervenants : " + liste.get(6) + "\n"
+                    "Les intervenants : " + liste.get(6) + "\n" +
+                    "Les participants : " + liste_participant.stream().map(e -> e.getNom()).toList() + "\n"
             );
             alert.show();
 
@@ -50,6 +58,11 @@ public class PageEventController {
             Concert concert = mapper.convertValue(Page1Controller.liste.get(indice).get(2), Concert.class);
             List<String> liste = concert.afficherDetails();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            List liste_parti = mapper.convertValue(Page1Controller.liste.get(indice).get(3), List.class);
+            List<Participant> liste_participant = new ArrayList<>();
+            for (int i = 0; i < liste_parti.size(); i++) {
+                liste_participant.add(mapper.convertValue(liste_parti.get(i), Participant.class));
+            }
             alert.setHeaderText("Information du concert");
             alert.setContentText("Nom concert : " + liste.get(0) + "\n" +
                     "Artiste concert : " + liste.get(1) + "\n" +
@@ -57,7 +70,8 @@ public class PageEventController {
                     "Lieu concert : " + liste.get(3) + "\n" +
                     "Capacité max : " + liste.get(4) + "\n" +
                     "Date de debut conference : " + liste.get(5) + "\n" +
-                    "Le genre musical : " + liste.get(6) + "\n"
+                    "Le genre musical : " + liste.get(6) + "\n" +
+                    "Les participants : " + liste_participant.stream().map(e -> e.getNom()).toList() + "\n"
             );
             alert.show();
         }
